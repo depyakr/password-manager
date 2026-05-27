@@ -67,7 +67,7 @@ def verify_otp():
     if not user:
         return jsonify({'error': 'User not found'}), 404
 
-    totp = pyotp.TOTP(user.otp_secret, interval=600)
+    totp = pyotp.TOTP(user.otp_secret)
     if totp.verify(otp):
         token = create_access_token(identity=str(user.id))
         return jsonify({'token': token}), 200
